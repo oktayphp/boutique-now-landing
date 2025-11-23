@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوتیک نو | فروشگاه مد مدرن</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: rgba(15, 23, 42, 0.85);
+            --card-soft: rgba(15, 23, 42, 0.75);
+            --border: rgba(148, 163, 184, 0.35);
+            --primary: #f97316;
+            --primary-soft: rgba(249, 115, 22, 0.15);
+            --secondary: #38bdf8;
+            --accent: #a855f7;
+        }
+        
+        /* Theme variations */
+        .theme-emerald {
+            --primary: #10b981;
+            --secondary: #0ea5e9;
+            --accent: #8b5cf6;
+        }
+        
+        .theme-rose {
+            --primary: #f43f5e;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+        }
+        
+        .theme-indigo {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #14b8a6;
+        }
+        
+        * { 
+            box-sizing: border-box; 
+        }
+        
+        html, body { 
+            scroll-behavior: smooth; 
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background:
+                radial-gradient(circle at top, rgba(56, 189, 248, 0.16), transparent 55%),
+                radial-gradient(circle at 15% 20%, rgba(249, 115, 22, 0.18), transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.20), transparent 45%),
+                var(--bg);
+            color: #e5e7eb;
+            min-height: 100vh;
+            overflow-x: hidden;
+            animation: bodyFadeIn 0.8s ease-out;
+        }
+        
+        .glass {
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 45%),
+                        linear-gradient(135deg, rgba(15,23,42,0.92), rgba(15,23,42,0.82));
+            border: 1px solid var(--border);
+            backdrop-filter: blur(26px);
+        }
+        
+        .glass-soft {
+            background: var(--card-soft);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            backdrop-filter: blur(20px);
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 999px;
+        }
+        
+        .blob {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            filter: blur(110px);
+            opacity: 0.6;
+            z-index: -1;
+            mix-blend-mode: screen;
+        }
+        
+        .blob-1 {
+            top: -80px;
+            right: 5%;
+            background: radial-gradient(circle at 30% 0, var(--primary), transparent 60%);
+            animation: blobDrift1 22s ease-in-out infinite alternate;
+        }
+        
+        .blob-2 {
+            bottom: -120px;
+            left: 0;
+            background: radial-gradient(circle at 10% 20%, var(--secondary), transparent 60%);
+            animation: blobDrift2 26s ease-in-out infinite alternate;
+        }
+        
+        .blob-3 {
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle at 50% 30%, var(--accent), transparent 65%);
+            opacity: 0.35;
+            animation: blobPulse 18s ease-in-out infinite alternate;
+        }
+        
+        @keyframes blobDrift1 {
+            0% { transform: translate3d(0,0,0) scale(1); }
+            50% { transform: translate3d(-40px, 20px,0) scale(1.08) rotate(6deg); }
+            100% { transform: translate3d(30px,-30px,0) scale(1.15) rotate(-4deg); }
+        }
+        
+        @keyframes blobDrift2 {
+            0% { transform: translate3d(0,0,0) scale(1.1); }
+            50% { transform: translate3d(40px,-10px,0) scale(0.96) rotate(-6deg); }
+            100% { transform: translate3d(-30px,30px,0) scale(1.05) rotate(4deg); }
+        }
+        
+        @keyframes blobPulse {
+            0% { transform: translate(-50%, 0) scale(0.9); opacity: 0.25; }
+            50% { transform: translate(-50%, 10px) scale(1.05); opacity: 0.4; }
+            100% { transform: translate(-50%, -10px) scale(1.12); opacity: 0.32; }
+        }
+        
+        @keyframes bodyFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(120deg, var(--primary), #facc15, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(26px) translateZ(0);
+            filter: blur(8px);
+            transition:
+                opacity 0.8s cubic-bezier(0.33, 1, 0.68, 1),
+                transform 0.9s cubic-bezier(0.33, 1, 0.68, 1),
+                filter 0.8s ease-out;
+            will-change: opacity, transform, filter;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) translateZ(0);
+            filter: blur(0);
+        }
+        
+        .interactive-card {
+            transition:
+                transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 0.3s ease-out,
+                background 0.4s ease-out;
+            will-change: transform, box-shadow;
+        }
+        
+        .interactive-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 32px 80px rgba(15, 23, 42, 0.85);
+            border-color: rgba(249, 250, 251, 0.35);
+            background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.14), transparent 55%),
+                        linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.88));
+        }
+        
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        
+        .btn-primary::after {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
+            transform: translateX(-130%) rotate(12deg);
+            opacity: 0;
+        }
+        
+        .btn-primary:hover::after {
+            opacity: 1;
+            transform: translateX(130%) rotate(12deg);
+            transition: transform 0.8s ease-out, opacity 0.3s ease-out;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px) scale(0.985);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(22px);
+            background: radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(15,23,42,0.98));
+            transition: box-shadow 0.35s ease-out, transform 0.35s ease-out, background 0.35s ease-out;
+        }
+        
+        .nav-scrolled {
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+            transform: translateY(-2px);
+            background: radial-gradient(circle at top, rgba(15,23,42,0.96), rgba(15,23,42,1));
+        }
+        
+        .floating-badge {
+            position: absolute;
+            border-radius: 999px;
+            border: 1px solid rgba(248, 250, 252, 0.25);
+            background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,64,175,0.9));
+            box-shadow: 0 16px 45px rgba(15, 23, 42, 0.75);
+            padding: 0.6rem 1rem;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            animation: floatBadge 6s ease-in-out infinite alternate;
+        }
+        
+        .floating-badge:nth-child(2) { animation-delay: -2s; }
+        .floating-badge:nth-child(3) { animation-delay: -4s; }
+        
+        @keyframes floatBadge {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-14px); }
+        }
+        
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, #facc15, #eab308);
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        /* Color picker styles */
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+        
+        /* Responsive fixes */
+        @media (max-width: 768px) {
+            .reveal {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+            
+            .delay-100, .delay-150, .delay-200 {
+                transition-delay: 0s !important;
+            }
+            
+            .hero-image-container {
+                margin-top: 2rem;
+            }
+            
+            .floating-badge {
+                display: none;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Color Picker -->
+    <div class="fixed top-20 right-4 z-50 glass rounded-2xl p-3 flex flex-col gap-2">
+        <div class="color-option bg-gradient-to-r from-orange-500 to-red-500 rounded-full" data-theme="default"></div>
+        <div class="color-option bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full" data-theme="emerald"></div>
+        <div class="color-option bg-gradient-to-r from-rose-500 to-pink-500 rounded-full" data-theme="rose"></div>
+        <div class="color-option bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" data-theme="indigo"></div>
+    </div>
+
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50" id="navbar">
+        <div class="glass nav-blur" id="navbarInner">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-yellow-400 flex items-center justify-center shadow-lg shadow-orange-500/30">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h10" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-300">فروشگاه آینده پوشاک</p>
+                        <p class="text-lg font-bold">بوتیک نو</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-6 text-sm text-slate-300">
+                    <a href="#home" class="hover:text-white transition-colors">خانه</a>
+                    <a href="#categories" class="hover:text-white transition-colors">دسته‌بندی‌ها</a>
+                    <a href="#products" class="hover:text-white transition-colors">محصولات</a>
+                    <a href="#stories" class="hover:text-white transition-colors">نظر مشتریان</a>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <button class="bg-white/95 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold hover:bg-white shadow-md shadow-slate-900/40 transition transform hover:-translate-y-0.5 hidden md:block">سبد خرید</button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuButton" class="md:hidden text-white p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="mobile-menu md:hidden container mx-auto px-4 pb-3">
+                <div class="flex flex-col gap-3 text-sm text-slate-300">
+                    <a href="#home" class="hover:text-white transition-colors py-2">خانه</a>
+                    <a href="#categories" class="hover:text-white transition-colors py-2">دسته‌بندی‌ها</a>
+                    <a href="#products" class="hover:text-white transition-colors py-2">محصولات</a>
+                    <a href="#stories" class="hover:text-white transition-colors py-2">نظر مشتریان</a>
+                    <button class="bg-white/95 text-slate-900 px-4 py-2 rounded-full text-sm font-semibold hover:bg-white shadow-md shadow-slate-900/40 transition w-full">سبد خرید</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 md:pt-28" id="home">
+        <section class="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="space-y-6 reveal">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/20 text-xs tracking-widest text-slate-200">
+                    <span class="w-2 h-2 rounded-full bg-gradient-to-tr from-orange-400 to-yellow-300 animate-ping-slow"></span>
+                    کالکشن پاییز ۱۴۰۳
+                </span>
+                <h1 class="text-3xl md:text-5xl font-black leading-tight">
+                    تجربه‌ای تازه از <span class="text-gradient">خرید آنلاین</span>
+                </h1>
+                <p class="text-slate-300 text-base md:text-lg leading-loose">
+                    بوتیک نو مجموعه‌ای منتخب از برندهای مینیمال و لوکس را با بسته‌بندی سفارشی و ارسال در همان روز به دست شما می‌رساند.
+                </p>
+                <div class="flex flex-wrap gap-4 btn-group">
+                    <a href="#products" class="btn-primary bg-gradient-to-l from-orange-500 via-amber-400 to-yellow-300 text-slate-900 font-bold px-6 py-3 md:px-8 md:py-4 rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.02]">خرید فوری</a>
+                    <a href="#categories" class="glass-soft px-6 py-3 md:px-8 md:py-4 rounded-2xl text-white font-semibold border border-white/15 hover:bg-white/8 transition interactive-card">مشاهده کالکشن</a>
+                </div>
+                <div class="flex gap-6 md:gap-8 pt-4 text-sm text-slate-300 stats-container">
+                    <div>
+                        <p class="text-2xl md:text-3xl font-bold text-white">+۲۴</p>
+                        <p>برند مستقل</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl md:text-3xl font-bold text-white">۴۸ ساعته</p>
+                        <p>ضمانت تعویض</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl md:text-3xl font-bold text-white">۹۸٪</p>
+                        <p>رضایت مشتری</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative reveal delay-150 hero-image-container" id="heroVisual">
+                <div class="glass interactive-card rounded-[32px] md:rounded-[36px] p-4 md:p-6 border border-white/10 shadow-2xl bg-gradient-to-b from-slate-900/60 to-slate-950/80" data-hero-card>
+                    <div class="aspect-[3/4] rounded-[24px] md:rounded-[30px] overflow-hidden relative will-change-transform" id="heroImageWrapper">
+                        <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?q=80&w=1974&auto=format&fit=crop" alt="Lookbook" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10"></div>
+                        <div class="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 glass-soft rounded-2xl p-3 md:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div>
+                                <p class="text-xs md:text-sm text-slate-300">کت چرم زنانه</p>
+                                <p class="text-base md:text-lg font-bold text-white">۴.۵۰۰.۰۰۰ تومان</p>
+                            </div>
+                            <button class="bg-white/95 text-slate-900 px-3 py-2 md:px-4 md:py-2 rounded-xl text-xs md:text-sm font-semibold shadow-lg shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5 w-full sm:w-auto">افزودن</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-4 md:mt-6 text-xs md:text-sm text-slate-300 gap-3">
+                        <p>ارسال رایگان تهران</p>
+                        <div class="flex -space-x-2 md:-space-x-3">
+                            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-slate-900" src="https://i.pravatar.cc/80?img=32" alt="customer">
+                            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-slate-900" src="https://i.pravatar.cc/80?img=12" alt="customer">
+                            <img class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-slate-900" src="https://i.pravatar.cc/80?img=47" alt="customer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 md:px-6 mt-16 md:mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" aria-label="مزایا">
+            <div class="glass-soft rounded-3xl p-5 md:p-6 reveal interactive-card">
+                <div class="w-12 h-12 rounded-2xl bg-orange-500/20 border border-orange-400/20 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18m-9-9l9 9-9 9"/></svg>
+                </div>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">ارسال اکسپرس</h3>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed">سفارش شما در تهران کمتر از ۴ ساعت و در سایر شهرها حداکثر ۳ روز کاری تحویل می‌شود.</p>
+            </div>
+            <div class="glass-soft rounded-3xl p-5 md:p-6 reveal delay-100 interactive-card">
+                <div class="w-12 h-12 rounded-2xl bg-yellow-400/20 border border-yellow-300/30 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-yellow-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">ضمانت اصالت</h3>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed">تمامی کالاها با کارت اصالت و فاکتور رسمی همراه هستند و هرگز کالای طرح ارائه نمی‌کنیم.</p>
+            </div>
+            <div class="glass-soft rounded-3xl p-5 md:p-6 reveal delay-200 interactive-card">
+                <div class="w-12 h-12 rounded-2xl bg-sky-400/20 border border-sky-300/30 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-sky-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+                </div>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">پشتیبانی دائمی</h3>
+                <p class="text-slate-300 text-xs md:text-sm leading-relaxed">تیم استایلرهای ما برای انتخاب سایز مناسب و ست کردن آیتم‌ها همراه شماست.</p>
+            </div>
+        </section>
+
+        <section id="categories" class="container mx-auto px-4 md:px-6 mt-16 md:mt-28">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 md:mb-10 reveal">
+                <div>
+                    <p class="uppercase text-xs tracking-[0.4em] text-slate-400">discover</p>
+                    <h2 class="text-2xl md:text-3xl font-bold mt-2">دسته‌بندی‌های شاخص</h2>
+                </div>
+                <button class="glass-soft px-5 py-2.5 md:px-6 md:py-3 rounded-2xl text-sm interactive-card">مشاهده همه</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <article class="relative glass-soft rounded-[24px] md:rounded-[32px] overflow-hidden reveal interactive-card">
+                    <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1974&auto=format&fit=crop" alt="کالکشن زنانه" class="w-full h-64 md:h-80 object-cover transition duration-700 hover:scale-105">
+                    <div class="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/40">
+                        <p class="text-xs md:text-sm text-slate-300">کالکشن مینیمال</p>
+                        <h3 class="text-xl md:text-2xl font-bold">زنانه</h3>
+                    </div>
+                </article>
+                <article class="relative glass-soft rounded-[24px] md:rounded-[32px] overflow-hidden reveal delay-100 interactive-card">
+                    <img src="https://images.unsplash.com/photo-1492233416464-9d36f0b91203?q=80&w=1974&auto=format&fit=crop" alt="کالکشن مردانه" class="w-full h-64 md:h-80 object-cover transition duration-700 hover:scale-105">
+                    <div class="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/40">
+                        <p class="text-xs md:text-sm text-slate-300">بهار/تابستان</p>
+                        <h3 class="text-xl md:text-2xl font-bold">مردانه</h3>
+                    </div>
+                </article>
+                <article class="relative glass-soft rounded-[24px] md:rounded-[32px] overflow-hidden reveal delay-200 interactive-card">
+                    <img src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?q=80&w=1974&auto=format&fit=crop" alt="اکسسوری" class="w-full h-64 md:h-80 object-cover transition duration-700 hover:scale-105">
+                    <div class="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-slate-950/90 via-slate-950/40">
+                        <p class="text-xs md:text-sm text-slate-300">دست‌سازهای خاص</p>
+                        <h3 class="text-xl md:text-2xl font-bold">اکسسوری</h3>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="products" class="container mx-auto px-4 md:px-6 mt-16 md:mt-28">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 md:mb-10 reveal">
+                <div>
+                    <p class="uppercase text-xs tracking-[0.4em] text-slate-400">exclusive drop</p>
+                    <h2 class="text-2xl md:text-3xl font-bold mt-2">پرفروش‌های این هفته</h2>
+                </div>
+                <div class="flex flex-wrap gap-2 md:gap-3 text-xs md:text-sm" id="filters">
+                    <button data-filter="all" class="px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-soft border border-white/20 active-filter transition-colors">همه</button>
+                    <button data-filter="women" class="px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-soft border border-white/20 transition-colors">زنانه</button>
+                    <button data-filter="men" class="px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-soft border border-white/20 transition-colors">مردانه</button>
+                    <button data-filter="acc" class="px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-soft border border-white/20 transition-colors">اکسسوری</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 product-grid">
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal product interactive-card" data-category="women">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="کاپشن پف‌دار">
+                        <span class="absolute top-3 md:top-4 left-3 md:left-4 bg-slate-900/70 text-xs px-2.5 py-0.5 md:px-3 md:py-1 rounded-full">جدید</span>
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">کت ترنچ ماسه‌ای</h3>
+                        <p class="text-xs md:text-sm text-slate-300">پارچه واترپروف تنفس‌پذیر</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۳.۹۵۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal delay-100 product interactive-card" data-category="men">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="کیف چرمی">
+                        <span class="absolute top-3 md:top-4 left-3 md:left-4 bg-orange-500/90 text-xs px-2.5 py-0.5 md:px-3 md:py-1 rounded-full text-slate-900">٪۲۰ تخفیف</span>
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">کفش چرم دست‌دوز</h3>
+                        <p class="text-xs md:text-sm text-slate-300">چرم نپا + زیره ویبرام</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۲.۷۵۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal delay-200 product interactive-card" data-category="acc">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1505740106531-4243f3831c78?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="هدفون">
+                        <span class="absolute top-3 md:top-4 left-3 md:left-4 bg-slate-900/70 text-xs px-2.5 py-0.5 md:px-3 md:py-1 rounded-full">خاص</span>
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">ساعت هوشمند مشکی</h3>
+                        <p class="text-xs md:text-sm text-slate-300">ترکیب فلز برس خورده و چرم</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۴.۲۰۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal product interactive-card" data-category="women">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="سویشرت">
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">ست سوییت‌شرت و شلوار</h3>
+                        <p class="text-xs md:text-sm text-slate-300">الیاف ارگانیک + راحتی بی‌نظیر</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۲.۳۹۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal delay-100 product interactive-card" data-category="men">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="کت مردانه">
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">کت کتان یقه آرشال</h3>
+                        <p class="text-xs md:text-sm text-slate-300">دوخت نیمه دست + لاینر کتان</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۳.۲۰۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl overflow-hidden group reveal delay-200 product interactive-card" data-category="acc">
+                    <div class="relative h-56 md:h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518544801958-efcbf8a7ec10?q=80&w=2147&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="کیف دستی">
+                    </div>
+                    <div class="p-4 md:p-6 space-y-3">
+                        <h3 class="text-lg md:text-xl font-semibold">کیف دستی چرمی</h3>
+                        <p class="text-xs md:text-sm text-slate-300">چرم نباتی + یراق‌ آلات طلایی</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-xl md:text-2xl font-bold text-white">۱.۹۸۰.۰۰۰</p>
+                            <button class="px-3 py-1.5 md:px-4 md:py-2 bg-white/95 text-slate-900 rounded-xl text-xs md:text-sm font-semibold shadow-md shadow-slate-900/50 hover:bg-white transition-transform transform hover:-translate-y-0.5">افزودن</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 md:px-6 mt-16 md:mt-24">
+            <div class="glass-soft rounded-[32px] p-6 md:p-8 lg:p-14 flex flex-col md:flex-row gap-8 md:gap-10 items-center reveal interactive-card">
+                <div class="flex-1 space-y-4">
+                    <p class="uppercase text-xs tracking-[0.5em] text-slate-300">editor pick</p>
+                    <h2 class="text-2xl md:text-3xl font-bold">کپسول کالکشن نور</h2>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">۸ آیتم محدود برای سه‌شنبه‌های کژوال /فرمی با پارچه‌های تنفسی و توناژ خاکی که تنها تا ۱۰ آبان قابل سفارش است.</p>
+                    <button class="btn-primary bg-white text-slate-900 px-5 py-2.5 md:px-6 md:py-3 rounded-2xl font-semibold text-sm shadow-lg shadow-slate-900/40">رزرو استایلینگ</button>
+                </div>
+                <div class="flex-1 grid grid-cols-2 gap-3 md:gap-4">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop" class="rounded-2xl md:rounded-3xl h-36 md:h-48 object-cover transition duration-700 hover:scale-105" alt="کالکشن">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200&auto=format&fit=crop" class="rounded-2xl md:rounded-3xl h-36 md:h-48 object-cover transition duration-700 hover:scale-105" alt="کالکشن">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1200&auto=format&fit=crop" class="rounded-2xl md:rounded-3xl h-36 md:h-48 object-cover transition duration-700 hover:scale-105" alt="کالکشن">
+                    <img src="https://images.unsplash.com/photo-1513267048331-5611cad62e42?q=80&w=1200&auto=format&fit=crop" class="rounded-2xl md:rounded-3xl h-36 md:h-48 object-cover transition duration-700 hover:scale-105" alt="کالکشن">
+                </div>
+            </div>
+        </section>
+
+        <section id="stories" class="container mx-auto px-4 md:px-6 mt-16 md:mt-28">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 md:mb-10 reveal">
+                <div>
+                    <p class="uppercase text-xs tracking-[0.4em] text-slate-400">voices</p>
+                    <h2 class="text-2xl md:text-3xl font-bold mt-2">آنچه مشتریان می‌گویند</h2>
+                </div>
+                <button class="glass-soft px-5 py-2.5 md:px-6 md:py-3 rounded-2xl text-sm interactive-card">نوشتن نظر</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <article class="glass-soft rounded-3xl p-5 md:p-6 space-y-4 reveal interactive-card">
+                    <p class="text-slate-200 text-sm md:text-base leading-loose">«هر بار بسته‌بندی و دست‌نوشته داخل جعبه من رو سوپرایز می‌کنه. کیفیت دوخت لباس‌ها دقیقاً همونی بود که استایلیست پیشنهاد داده بود.»</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/80?img=21" class="w-10 h-10 md:w-12 md:h-12 rounded-full" alt="مشتری">
+                        <div>
+                            <h4 class="font-semibold">الناز فراهانی</h4>
+                            <p class="text-xs text-slate-400">کارگردان هنری</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl p-5 md:p-6 space-y-4 reveal delay-100 interactive-card">
+                    <p class="text-slate-200 text-sm md:text-base leading-loose">«سایزینگ دقیق و امکان پرو در محل واقعاً جذابه. هفته پیش کفش دست‌دوز سفارش دادم و همان روز تحویل گرفتم.»</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/80?img=13" class="w-10 h-10 md:w-12 md:h-12 rounded-full" alt="مشتری">
+                        <div>
+                            <h4 class="font-semibold">مانی نامور</h4>
+                            <p class="text-xs text-slate-400">مشاور برند</p>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-soft rounded-3xl p-5 md:p-6 space-y-4 reveal delay-200 interactive-card">
+                    <p class="text-slate-200 text-sm md:text-base leading-loose">«کیفیت متریال و جزئیات دوخت دقیقاً مشابه خرید حضوری از بوتیک‌های اروپاییه. پیشنهاد می‌کنم حتماً کالکشن نور رو ببینید.»</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/80?img=7" class="w-10 h-10 md:w-12 md:h-12 rounded-full" alt="مشتری">
+                        <div>
+                            <h4 class="font-semibold">مهرنوش طالبی</h4>
+                            <p class="text-xs text-slate-400">عکاس مد</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 md:px-6 mt-16 md:mt-24">
+            <div class="glass-soft rounded-[32px] p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-10 reveal interactive-card">
+                <div class="flex-1 space-y-3">
+                    <p class="uppercase text-xs tracking-[0.4em] text-slate-400">newsletter</p>
+                    <h3 class="text-2xl md:text-3xl font-bold">به خانواده بوتیک نو بپیوندید</h3>
+                    <p class="text-slate-300 text-sm md:text-base">اولین نفری باشید که از دراپ‌های محدود و پیشنهادهای اختصاصی باخبر می‌شود.</p>
+                </div>
+                <form class="flex flex-1 flex-col sm:flex-row gap-3 md:gap-4 w-full newsletter-form" id="newsletterForm">
+                    <input type="email" required placeholder="ایمیل شما" class="flex-1 rounded-2xl px-4 py-3 md:px-5 md:py-4 bg-white/5 border border-white/20 focus:outline-none focus:border-white text-white transition text-sm md:text-base">
+                    <button type="submit" class="btn-primary bg-gradient-to-l from-orange-500 via-amber-400 to-yellow-300 text-slate-900 font-semibold px-6 py-3 md:px-8 md:py-4 rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 text-sm md:text-base">عضویت</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-16 md:mt-24 border-t border-white/5 bg-slate-950/70 backdrop-blur-xl">
+        <div class="container mx-auto px-4 md:px-6 py-8 md:py-12 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 text-xs md:text-sm">
+            <div class="space-y-4">
+                <h4 class="text-xl md:text-2xl font-bold">بوتیک نو</h4>
+                <p class="text-slate-400">فروشگاه آنلاین لباس‌های منتخب و محدود؛ با تمرکز بر تجربه کاربری لوکس و ارسال سریع.</p>
+                <div class="flex gap-3 md:gap-4 text-slate-400">
+                    <a href="#" class="hover:text-white transition-colors">اینستاگرام</a>
+                    <a href="#" class="hover:text-white transition-colors">تلگرام</a>
+                    <a href="#" class="hover:text-white transition-colors">پینترست</a>
+                </div>
+            </div>
+            <div>
+                <h5 class="font-semibold mb-4">راهنما</h5>
+                <ul class="space-y-2 text-slate-300">
+                    <li><a href="#home" class="hover:text-white transition-colors">شروع</a></li>
+                    <li><a href="#products" class="hover:text-white transition-colors">محصولات</a></li>
+                    <li><a href="#stories" class="hover:text-white transition-colors">نظرات</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">سوالات متداول</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold mb-4">خدمات</h5>
+                <ul class="space-y-2 text-slate-300">
+                    <li>استایلینگ شخصی</li>
+                    <li>سفارش عمده</li>
+                    <li>باشگاه مشتریان</li>
+                    <li>هدیه سازمانی</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold mb-4">ارتباط</h5>
+                <p class="text-slate-300">تهران، خیابان فرشته</p>
+                <p class="text-slate-300" dir="ltr">+98 21 4444 2222</p>
+                <p class="text-slate-300" dir="ltr">hello@boutiquenow.ir</p>
+            </div>
+        </div>
+        <div class="border-t border-white/5 py-4 md:py-6 text-center text-xs text-slate-500">© 2024 oktayphp - Crafted for GitHub Showcase
+        </div>
+    </footer>
+
+    <script>
+        // Theme switching
+        const colorOptions = document.querySelectorAll('.color-option');
+        const root = document.documentElement;
+        
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                option.classList.add('active');
+                
+                // Get theme name
+                const theme = option.dataset.theme;
+                
+                // Remove all theme classes
+                document.body.classList.remove('theme-emerald', 'theme-rose', 'theme-indigo');
+                
+                // Add selected theme class
+                if (theme !== 'default') {
+                    document.body.classList.add(`theme-${theme}`);
+                }
+            });
+        });
+        
+        // Set default theme as active
+        document.querySelector('[data-theme="default"]').classList.add('active');
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const trigger = window.innerHeight * 0.85;
+            revealElements.forEach((el, index) => {
+                const rectTop = el.getBoundingClientRect().top;
+                if (rectTop < trigger) {
+                    if (!el.classList.contains('active')) {
+                        el.style.transitionDelay = (index * 0.04) + 's';
+                    }
+                    el.classList.add('active');
+                }
+            });
+        };
+        
+        // Improved scroll reveal for mobile
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', revealOnScroll, { passive: true });
+            revealOnScroll();
+        } else {
+            // On mobile, reveal all elements immediately
+            revealElements.forEach(el => {
+                el.classList.add('active');
+            });
+        }
+
+        // Navbar shadow + transform
+        const navbarInner = document.getElementById('navbarInner');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                navbarInner.classList.add('nav-scrolled');
+            } else {
+                navbarInner.classList.remove('nav-scrolled');
+            }
+        }, { passive: true });
+
+        // Filters
+        const filterButtons = document.querySelectorAll('#filters button');
+        const products = document.querySelectorAll('.product');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('active-filter');
+                    b.classList.remove('ring-2', 'ring-orange-400/60', 'bg-white/10');
+                });
+                btn.classList.add('active-filter', 'ring-2', 'ring-orange-400/60', 'bg-white/10');
+                const filter = btn.dataset.filter;
+                products.forEach(card => {
+                    const match = filter === 'all' || card.dataset.category === filter;
+                    card.style.opacity = match ? '1' : '0';
+                    card.style.transform = match ? 'translateY(0)' : 'translateY(12px)';
+                    card.style.pointerEvents = match ? 'auto' : 'none';
+                    card.style.transition = 'opacity 0.32s ease-out, transform 0.32s ease-out';
+                    setTimeout(() => {
+                        if (!match) card.style.display = 'none';
+                        else card.style.display = '';
+                    }, match ? 0 : 120);
+                });
+            });
+        });
+
+        // Newsletter form
+        const form = document.getElementById('newsletterForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            alert('عضویت شما با موفقیت ثبت شد!');
+            form.reset();
+        });
+
+        // Hero parallax effect (only on desktop)
+        if (window.innerWidth > 768) {
+            const heroCard = document.querySelector('[data-hero-card]');
+            const heroImageWrapper = document.getElementById('heroImageWrapper');
+
+            if (heroCard && heroImageWrapper) {
+                const maxRotate = 10; // degrees
+                const maxTranslate = 16; // px
+                const resetTransform = () => {
+                    heroCard.style.transform = '';
+                    heroImageWrapper.style.transform = '';
+                };
+
+                heroCard.addEventListener('mousemove', (e) => {
+                    const rect = heroCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const midX = rect.width / 2;
+                    const midY = rect.height / 2;
+
+                    const rotateY = ((x - midX) / midX) * -maxRotate;
+                    const rotateX = ((y - midY) / midY) * maxRotate;
+                    const translateX = ((x - midX) / midX) * maxTranslate;
+                    const translateY = ((y - midY) / midY) * maxTranslate;
+
+                    heroCard.style.transform = `translateY(-6px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+                    heroCard.style.transformStyle = 'preserve-3d';
+                    heroImageWrapper.style.transform = `translate3d(${translateX.toFixed(1)}px, ${translateY.toFixed(1)}px, 20px) scale(1.02)`;
+                    heroImageWrapper.style.transition = 'transform 0.08s linear';
+                });
+
+                heroCard.addEventListener('mouseleave', () => {
+                    heroCard.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1)';
+                    heroImageWrapper.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1)';
+                    resetTransform();
+                    setTimeout(() => {
+                        heroCard.style.transition = '';
+                        heroImageWrapper.style.transition = '';
+                    }, 600);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
