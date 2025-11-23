@@ -31,7 +31,7 @@
 
 ## 🖼️ پیش‌نمایش
 
-*![Uploading image.png…]()
+*![Banner بوتیک نو](images/boutique-now-landing-img.png)
 *
 
 ---
