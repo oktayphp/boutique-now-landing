@@ -41,8 +41,8 @@
 
 1.  **کلون کردن مخزن:**
     ```bash
-    git clone https://github.com/YourUsername/YourRepoName.git
-    cd YourRepoName
+    git clone https://github.com/oktayphp/boutique-now-landing.git
+    cd boutique-now-landing
     ```
 
 2.  **اجرا:**
